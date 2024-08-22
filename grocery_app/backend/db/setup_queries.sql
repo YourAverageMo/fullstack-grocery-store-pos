@@ -102,5 +102,9 @@ PRAGMA foreign_keys = ON;
 ,
 ()
 --
+-- useful queries
+--
+UPDATE sqlite_sequence SET seq = 0 WHERE name = 'products';
+--
 --
 --

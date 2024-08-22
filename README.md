@@ -12,9 +12,9 @@ https://marketplace.visualstudio.com/items?itemName=yy0931.vscode-sqlite3-editor
 
 Here is a simple overview on the data flow:
 
-![Database Design Simple](./assets/db_diagram_simple.png)
+![Database Design Simple](./readme_assets/db_diagram_simple.png)
 
 Here is a more detailed explanation on the columns each table has as well as the references:
 
-![Database Design](./assets/db_diagram.png)
+![Database Design](./readme_assets/db_diagram.png)
 
