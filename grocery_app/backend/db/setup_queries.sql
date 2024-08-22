@@ -108,3 +108,6 @@ UPDATE sqlite_sequence SET seq = 0 WHERE name = 'products';
 --
 --
 --
+
+UPDATE `products` SET `product_id` = ? WHERE `rowid` IS ? AND `product_id` IS ?
+[2, 14, 14]
