@@ -1,5 +1,6 @@
 import sqlite3
 import os
+import queries
 
 
 def connect_to_db():
@@ -28,7 +29,7 @@ def get_all_products(cursor: sqlite3.Cursor):
     Returns:
         sqlite3.cursor.Fetchall(): object from sqlite3 library in the form of nested lists where each item corresponds to a row in the database from the cursor input
     """
-    cursor.execute("SELECT * FROM products")
+    cursor.execute(queries.select_all)
     all_products = cursor.fetchall()
     return all_products
 
@@ -44,9 +45,7 @@ def insert_new_products(cursor: sqlite3.Cursor, products: list[tuple[str, int,
     Returns:
         bool: True if successfully inserted row
     """
-    cursor.executemany(
-        "INSERT INTO `products` (`name`, `uom_id`, `price_per_unit`) VALUES (?, ?, ?)",
-        products)
+    cursor.executemany(queries.insert_new_products, products)
     return True
 
 
@@ -63,33 +62,24 @@ def delete_products(cursor: sqlite3.Cursor,
     Returns:
         bool: True if successfully deleted rows
     """
-    cursor.executemany(
-        "DELETE FROM `products` WHERE (typeof(`rowid`) = 'integer' AND ((? <= `rowid` AND `rowid` <= ?)))",
-        rows)
+    cursor.executemany(queries.delete_products, rows)
     # renumber product_id values (table index) to remove gaps in numbering
     if reindex:
-        all_rows = cursor.execute(
-            "SELECT * FROM products ORDER BY `product_id` ASC").fetchall()
+        all_rows = cursor.execute(queries.select_all).fetchall()
         all_rows = [(new_index, old_index[0], old_index[0])
                     for new_index, old_index in enumerate(all_rows, 1)]
-        print(all_rows)
-        cursor.executemany(
-            "UPDATE `products` SET `product_id` = ? WHERE `rowid` IS ? AND `product_id` IS ?",
-            all_rows)
-        cursor.execute(
-            "UPDATE sqlite_sequence SET seq = 0 WHERE name = 'products';")
+        cursor.executemany(queries.reindex_update, all_rows)
+        cursor.execute(queries.reset_seq)
     return True
 
 
 if __name__ == '__main__':
     conn, cursor = connect_to_db()
 
-    # print(get_all_products(cursor))
-    # print("---")
+    print(get_all_products(cursor))
+    print("---")
     # insert_new_products(cursor, [("rice", 2, 5), ("rice", 2, 5)])
-    delete_products(cursor, [
-        (0, 0),
-    ], True)
+    # delete_products(cursor, [(0, 0)], True)
 
     conn.commit()
     conn.close()

@@ -1,3 +1,8 @@
+-- This document is just reference sql queries that were used throughout the project and aren't actively used.
+-- 
+-- 
+-- 
+-- 
 -- intitial table creations
 CREATE TABLE
     `products` (
