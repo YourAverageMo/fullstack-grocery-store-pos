@@ -1,6 +1,12 @@
 import sqlite3
 import os
-import queries
+try:
+    # When running as part of the package
+    from . import queries
+except ImportError:
+    # When running directly
+    import queries
+
 
 
 def connect_to_db():
