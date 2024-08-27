@@ -24,15 +24,18 @@ def get():
 def delete():
 
     data = request.json
-    print(data)
-    product_ids = data.get('product_ids', [])
-    print(product_ids)
+    product_id = data.get('product_ids', [])[0]
+    product_id = int(product_id)
 
-    # conn, cursor = products_dao.connect_to_db()
-    # response = products_dao.delete_products(cursor, product_ids, True)
+    conn, cursor = products_dao.connect_to_db()
+    products_dao.delete_products(cursor, [(product_id, product_id)], True)
 
-    # conn.close()
-    return response
+    conn.commit()
+    conn.close()
+    return jsonify({
+        "status": "success",
+        "message": "Products deleted successfully."
+    }), 200
 
 
 if __name__ == '__main__':

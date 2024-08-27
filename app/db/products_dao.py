@@ -8,7 +8,6 @@ except ImportError:
     import queries
 
 
-
 def connect_to_db():
     """
     Connects to the SQLite database.

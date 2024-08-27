@@ -10,13 +10,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     let html = '';
                     data.forEach(product => {
                         html += `
-                            <tr>
+                            <tr data-id="${product[0]}">
                                 <td>${product[0]}</td>
                                 <td>${product[1]}</td>
                                 <td>${product[2]}</td>
                                 <td>${product[3]}</td>
                                 <td>
-                                    <button class="btn btn-danger btn-sm me-2">Delete</button>
+                                    <button class="btn btn-danger btn-sm me-2 delete-btn">Delete</button>
                                     <button class="btn btn-primary btn-sm">Edit</button>
                                 </td>
                             </tr>
