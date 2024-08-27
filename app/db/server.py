@@ -5,7 +5,7 @@ import sqlite3
 app = Flask(__name__)
 
 
-@app.route('/getproducts',methods=['GET'])
+@app.route('/',methods=['GET'])
 def get():
     conn, cursor = products_dao.connect_to_db()
     products = products_dao.get_all_products(cursor)
