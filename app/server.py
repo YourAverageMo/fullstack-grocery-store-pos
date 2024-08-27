@@ -18,6 +18,14 @@ def get():
     conn.close()
     return response
 
+@app.route('/deleteproduct', methods=['post'])
+def delete():
+    conn, cursor = products_dao.connect_to_db()
+    response = products_dao.delete_products(cursor, [(request.form['product_id'], request.form['product_id'])], True)
+
+    conn.close()
+    return response
+
 
 if __name__ == '__main__':
     print("starting flask server for grocery store pos")

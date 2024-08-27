@@ -36,9 +36,17 @@ body {
     background-color: #f8f9fa;
 }
 
+.table .btn {
+    padding: 4px 8px;
+    /* Smaller padding */
+    font-size: 0.60rem;
+    /* Smaller font size */
+}
+
 .table td,
 .table th {
     vertical-align: middle;
+    padding: 3px;
 }
 
 h1 {
