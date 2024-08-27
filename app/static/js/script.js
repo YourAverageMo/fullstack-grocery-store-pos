@@ -1,5 +1,5 @@
-document.addEventListener("DOMContentLoaded", function() {
-    fetch('/home')
+document.addEventListener("DOMContentLoaded", function () {
+    fetch('/getproducts')
         .then(response => response.json())
         .then(data => {
             const productsDiv = document.getElementById('products');

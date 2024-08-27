@@ -9,14 +9,14 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-# @app.route('/', methods=['GET'])
-# def get():
-#     conn, cursor = products_dao.connect_to_db()
-#     products = products_dao.get_all_products(cursor)
+@app.route('/getproducts', methods=['GET'])
+def get():
+    conn, cursor = products_dao.connect_to_db()
+    products = products_dao.get_all_products(cursor)
 
-#     response = jsonify(products)
-#     conn.close()
-#     return response
+    response = jsonify(products)
+    conn.close()
+    return response
 
 
 if __name__ == '__main__':
