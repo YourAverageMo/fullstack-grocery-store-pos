@@ -9,6 +9,7 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+
 @app.route('/getproducts', methods=['GET'])
 def get():
     conn, cursor = products_dao.connect_to_db()
@@ -18,12 +19,19 @@ def get():
     conn.close()
     return response
 
-@app.route('/deleteproduct', methods=['post'])
-def delete():
-    conn, cursor = products_dao.connect_to_db()
-    response = products_dao.delete_products(cursor, [(request.form['product_id'], request.form['product_id'])], True)
 
-    conn.close()
+@app.route('/deleteproduct', methods=['POST'])
+def delete():
+
+    data = request.json
+    print(data)
+    product_ids = data.get('product_ids', [])
+    print(product_ids)
+
+    # conn, cursor = products_dao.connect_to_db()
+    # response = products_dao.delete_products(cursor, product_ids, True)
+
+    # conn.close()
     return response
 
 

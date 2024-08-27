@@ -33,15 +33,42 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    // function fetchProducts() {
-    //     fetch('/editproducts')
-    //         .then(response => response)
-
-    // }
+    function deleteProduct(productId) {
+        fetch('/deleteproduct', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ product_ids: [productId] })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    fetchProducts(); // Refresh the table after deletion
+                } else {
+                    alert('Error deleting product: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting product:', error);
+                alert('Error deleting product.');
+            });
+    }
 
     // Fetch products on page load
     fetchProducts();
 
     // Add event listener to the refresh button
     refreshButton.addEventListener('click', fetchProducts);
+
+    // Event delegation for delete buttons
+    tableBody.addEventListener('click', function (event) {
+        if (event.target.classList.contains('delete-btn')) {
+            const row = event.target.closest('tr');
+            const productId = row.getAttribute('data-id');
+            if (confirm('Are you sure you want to delete this product?')) {
+                deleteProduct(productId);
+            }
+        }
+    });
 });
