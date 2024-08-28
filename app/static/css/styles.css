@@ -28,6 +28,10 @@ body {
     background-color: #004085;
 }
 
+.btn-success {
+    width: 100%;
+}
+
 .table-hover tbody tr:hover {
     background-color: #f1f1f1;
 }
@@ -61,6 +65,26 @@ th {
 
 td {
     font-size: 1rem;
+}
+
+#insertProductRow {
+    margin-top: 20px;
+    opacity: 0.8;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    padding: 10px;
+    position: relative;
+    bottom: -10px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#insertProductRow table {
+    margin-bottom: 0;
+}
+
+#insertProductRow:hover {
+    opacity: 1;
+    transform: translateY(-5px);
 }
 
 @media (max-width: 768px) {

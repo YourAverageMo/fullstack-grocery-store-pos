@@ -34,6 +34,22 @@
           <!-- Table rows will be inserted here by JavaScript -->
         </tbody>
       </table>
+      <!-- Insert Product Row -->
+      <div id="insertProductRow" class="fade-out">
+        <table class="table table-hover">
+          <tr>
+            <td><input type="text" id="newProductName" class="form-control" placeholder="Product Name"></td>
+            <td>
+              <select id="newProductUnits" class="form-select">
+                <option value="1">1 (kg)</option>
+                <option value="2">2 (each)</option>
+              </select>
+            </td>
+            <td><input type="text" id="newProductPrice" class="form-control" placeholder="Price"></td>
+            <td><button class="btn btn-success">Add</button></td>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
 
