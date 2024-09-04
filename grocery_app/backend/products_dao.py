@@ -73,11 +73,31 @@ def delete_products(cursor: sqlite3.Cursor,
     return True
 
 
+def edit_product(cursor: sqlite3.Cursor, name: str, uom_id: int,
+                 price_per_unit: int, rowid: int) -> bool:
+    """Edits product at given row in rowid parameter. All arguments are the new values you want to input into table except for rowid.
+
+    Args:
+        cursor (sqlite3.Cursor):
+        name (str):
+        uom_id (int):
+        price_per_unit (int):
+        rowid (int):
+
+    Returns:
+        bool: True if successfully edited row
+    """
+    cursor.execute(queries.edit_products,
+                   (name, uom_id, price_per_unit, rowid))
+    return True
+
+
 if __name__ == '__main__':
     conn, cursor = connect_to_db()
 
     print(get_all_products(cursor))
     print("---")
+    # edit_product(cursor, 'testy2', 1, 20, 4)
     # insert_new_products(cursor, [("rice", 2, 5), ("rice", 2, 5)])
     # delete_products(cursor, [(0, 0)], True)
 
