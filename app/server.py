@@ -36,6 +36,23 @@ def delete():
         "status": "success",
         "message": "Products deleted successfully."
     }), 200
+    
+@app.route('/insertproduct', methods=['POST'])
+def insert_product():
+    data = request.json
+    product_name = data.get('name')
+    product_units = int(data.get('units'))
+    product_price = int(data.get('price'))
+
+    if product_name and isinstance(product_units, int) and isinstance(product_price, (int, float)):
+        conn, cursor = products_dao.connect_to_db()
+        products_dao.insert_new_products(cursor, [(product_name, product_units, product_price)])
+        conn.commit()
+        conn.close()
+        return jsonify({'success': True})
+    else:
+        return jsonify({'success': False, 'message': 'Invalid product data'})
+
 
 
 if __name__ == '__main__':

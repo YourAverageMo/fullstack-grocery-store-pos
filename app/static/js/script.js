@@ -71,4 +71,44 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     });
+
+    // Insert product event listener
+    document.querySelector('#insertProductRow .btn-success').addEventListener('click', function () {
+        const productName = document.getElementById('newProductName').value;
+        const productUnits = parseInt(document.getElementById('newProductUnits').value);
+        const productPrice = parseFloat(document.getElementById('newProductPrice').value);
+
+        if (productName && !isNaN(productUnits) && !isNaN(productPrice)) {
+            // Create a new product object
+            const newProduct = {
+                name: productName,
+                units: productUnits,
+                price: productPrice
+            };
+
+            // Send the new product to the server
+            fetch('/insertproduct', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newProduct)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // refresh the product list after insertion
+                        window.location.reload();
+                    } else {
+                        console.error('Error inserting product:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        } else {
+            alert("Please enter valid product details.");
+        }
+    });
+
 });
