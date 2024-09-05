@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <td>${product[3]}</td>
                                 <td>
                                     <button class="btn btn-danger btn-sm me-2 delete-btn">Delete</button>
-                                    <button class="btn btn-primary btn-sm">Edit</button>
+                                    <button class="btn btn-primary btn-sm edit-btn">Edit</button>
                                 </td>
                             </tr>
                         `;
@@ -71,6 +71,36 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     });
+
+    // Event delegation for edit buttons
+    tableBody.addEventListener('click', function (event) {
+        if (event.target.classList.contains('edit-btn')) {
+            const row = event.target.closest('tr');
+            const productId = row.getAttribute('data-id');
+
+            // Get the current values of the product
+            const currentName = row.querySelector('td:nth-child(2)').textContent;
+            const currentUnits = row.querySelector('td:nth-child(3)').textContent;
+            const currentPrice = row.querySelector('td:nth-child(4)').textContent;
+
+            // Replace the table data cells with input fields for editing
+            row.querySelector('td:nth-child(2)').innerHTML = `<input type="text" class="form-control" value="${currentName}">`;
+            row.querySelector('td:nth-child(3)').innerHTML = `
+            <select class="form-select">
+                <option value="1" ${currentUnits == 1 ? 'selected' : ''}>1 (kg)</option>
+                <option value="2" ${currentUnits == 2 ? 'selected' : ''}>2 (each)</option>
+            </select>`;
+            row.querySelector('td:nth-child(4)').innerHTML = `<input type="text" class="form-control" value="${currentPrice}">`;
+
+            // Add Save and Cancel buttons
+            const actionCell = row.querySelector('td:nth-child(5)');
+            actionCell.innerHTML = `
+                <button class="btn btn-success btn-sm me-2 save-btn">Save</button>
+                <button class="btn btn-secondary btn-sm cancel-btn">Cancel</button>
+            `;
+        }
+    });
+
 
     // Insert product event listener
     document.querySelector('#insertProductRow .btn-success').addEventListener('click', function () {

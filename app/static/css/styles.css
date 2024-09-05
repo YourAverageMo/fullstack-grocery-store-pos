@@ -28,7 +28,7 @@ body {
     background-color: #004085;
 }
 
-.btn-success {
+.btn-add {
     width: 100%;
 }
 
@@ -52,6 +52,13 @@ body {
     vertical-align: middle;
     padding: 3px;
 }
+
+.table input.form-control,
+.table select.form-select {
+    height: auto; /* Adjust height to fit the row */
+    font-size: 0.7rem; /* Adjust font size if needed */
+}
+
 
 h1 {
     font-size: 2.5rem;
