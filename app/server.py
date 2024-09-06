@@ -52,6 +52,21 @@ def insert_product():
         return jsonify({'success': True})
     else:
         return jsonify({'success': False, 'message': 'Invalid product data'})
+    
+@app.route('/editproduct/<int:product_id>', methods=['PUT'])
+def edit_product(product_id):
+    data = request.json
+    new_name = data.get('name')
+    new_units = int(data.get('units'))
+    new_price = int(data.get('price'))
+    
+    conn, cursor = products_dao.connect_to_db()
+    products_dao.edit_product(cursor,new_name,new_units,new_price,product_id)
+    conn.commit()
+    conn.close()
+    
+    return jsonify({'success': True})
+
 
 
 

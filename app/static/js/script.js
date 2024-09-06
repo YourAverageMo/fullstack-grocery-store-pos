@@ -84,13 +84,13 @@ document.addEventListener("DOMContentLoaded", function () {
             const currentPrice = row.querySelector('td:nth-child(4)').textContent;
 
             // Replace the table data cells with input fields for editing
-            row.querySelector('td:nth-child(2)').innerHTML = `<input type="text" class="form-control" value="${currentName}">`;
+            row.querySelector('td:nth-child(2)').innerHTML = `<input type="text" class="form-control edit-name" value="${currentName}">`;
             row.querySelector('td:nth-child(3)').innerHTML = `
-            <select class="form-select">
+            <select class="form-select edit-units">
                 <option value="1" ${currentUnits == 1 ? 'selected' : ''}>1 (kg)</option>
                 <option value="2" ${currentUnits == 2 ? 'selected' : ''}>2 (each)</option>
             </select>`;
-            row.querySelector('td:nth-child(4)').innerHTML = `<input type="text" class="form-control" value="${currentPrice}">`;
+            row.querySelector('td:nth-child(4)').innerHTML = `<input type="text" class="form-control edit-price" value="${currentPrice}">`;
 
             // Add Save and Cancel buttons
             const actionCell = row.querySelector('td:nth-child(5)');
@@ -100,6 +100,53 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
         }
     });
+
+    // Event delegation for Save button
+    tableBody.addEventListener('click', function (event) {
+        if (event.target.classList.contains('save-btn')) {
+            const row = event.target.closest('tr');
+            const productId = row.getAttribute('data-id');
+            const newName = row.querySelector('.edit-name').value;
+            const newUnits = row.querySelector('.edit-units').value;
+            const newPrice = row.querySelector('.edit-price').value;
+
+            // Send data to the server via a PUT/POST request
+            fetch(`/editproduct/${productId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: newName,
+                    units: newUnits,
+                    price: newPrice
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update the row with the new values
+                        row.innerHTML = `
+                    <td>${productId}</td>
+                    <td>${newName}</td>
+                    <td>${newUnits}</td>
+                    <td>${newPrice}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm me-2 delete-btn">Delete</button>
+                        <button class="btn btn-primary btn-sm edit-btn">Edit</button>
+                    </td>
+                `;
+                    } else {
+                        alert('Error updating product.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error updating product.');
+                });
+        }
+    });
+
 
 
     // Insert product event listener
