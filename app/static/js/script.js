@@ -147,7 +147,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-
+    // Cancel button just refreshes products
+    tableBody.addEventListener('click', function (event) {
+        if (event.target.classList.contains('cancel-btn')) { fetchProducts(); }
+    });
 
     // Insert product event listener
     document.querySelector('#insertProductRow .btn-success').addEventListener('click', function () {
