@@ -15,6 +15,8 @@ A ready to use full stack grocery store web application I made from scratch. Use
 The database is using SQLite and also SQLite3 library in python. For viewing, managing, and editing the database it was mostly done within the free VSCode extension SQLite3 Editor. I highly HIGHLY recommend this extension. Link 👇🏽  
 https://marketplace.visualstudio.com/items?itemName=yy0931.vscode-sqlite3-editor
 
+For reference, to see the SQL queries that i used throughout the project you can check out app > db > schema.sql and app > db > queries.py. The later is a py file made purely for readability in the ORM (products_dao).
+
 Here is a simple overview on the data flow:
 
 ![Database Design Simple](./readme_assets/db_diagram_simple.png)
