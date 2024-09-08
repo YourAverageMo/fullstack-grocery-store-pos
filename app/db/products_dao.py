@@ -1,6 +1,11 @@
 import sqlite3
 import os
-import queries
+try:
+    # When running as part of the package
+    from . import queries
+except ImportError:
+    # When running directly
+    import queries
 
 
 def connect_to_db():
@@ -14,7 +19,7 @@ def connect_to_db():
     """
     # sqlite3 doesnt accept relative paths. instead of using absolute path, grab absolute path via os
     # if '/db/store.db' doesnt work use '\\db\\store.db'
-    path = os.path.dirname(os.path.realpath(__file__)) + '/db/store.db'
+    path = os.path.dirname(os.path.realpath(__file__)) + '/store.db'
     conn = sqlite3.connect(path)
     cursor = conn.cursor()
     return conn, cursor
